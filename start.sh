@@ -3,7 +3,7 @@
 set -euo pipefail
 
 usage() {
-    echo "Usage: ./start.sh <dev|build> [shitu|shiping|shiyin]" >&2
+    echo "Usage: ./start.sh <dev|build> [shiping]" >&2
 }
 
 if (( $# < 1 || $# > 2 )); then
@@ -12,17 +12,11 @@ if (( $# < 1 || $# > 2 )); then
 fi
 
 action="$1"
-app="${2:-shitu}"
+app="${2:-shiping}"
 
 case "$app" in
-    shitu)
-        bin="ShiTu"
-        ;;
     shiping)
         bin="ShiPing"
-        ;;
-    shiyin)
-        bin="shiyin"
         ;;
     *)
         echo "Unknown application: $app" >&2
@@ -192,8 +186,6 @@ prepare_skia_binaries() {
 }
 
 prepare_skia_binaries
-
-export SHITU_BUILD_DATE="${SHITU_BUILD_DATE:-$(date -u +%Y-%m-%d)}"
 
 case "$action" in
     dev)

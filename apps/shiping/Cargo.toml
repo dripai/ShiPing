@@ -2,7 +2,7 @@
 name = "shiping"
 version.workspace = true
 edition.workspace = true
-description = "ShiPing screen recorder UI prototype"
+description = "ShiPing cross-platform screen recorder"
 publish = false
 autobins = false
 

@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory)]
-    [ValidateSet('ShiTu', 'ShiPing')]
+    [ValidateSet('ShiPing')]
     [string]$Product,
 
     [Parameter(Mandatory)]
@@ -17,11 +17,6 @@ param(
 $ErrorActionPreference = 'Stop'
 
 $products = @{
-    ShiTu = @{
-        ExecutableName = 'ShiTu.exe'
-        ManifestTemplate = Join-Path $PSScriptRoot '..\packaging\shitu\AppxManifest.xml'
-        IconSource = Join-Path $PSScriptRoot '..\assets\app.png'
-    }
     ShiPing = @{
         ExecutableName = 'ShiPing.exe'
         ManifestTemplate = Join-Path $PSScriptRoot '..\packaging\shiping\AppxManifest.xml'

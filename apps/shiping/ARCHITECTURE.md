@@ -1,5 +1,7 @@
 # ShiPing 跨平台架构
 
+本文件保留原仓库的架构与历史验证记录。独立项目本次迁移的验证结果见[迁移记录](../../MIGRATION.md)。
+
 ## 目标
 
 Slint UI 和录制业务核心不直接依赖 HWND、GDI、WASAPI、Media Foundation、ScreenCaptureKit 或 PipeWire 类型。各平台通过同一组端口提供目标选择、视频采集、音频采集、编码封装和桌面集成能力。
@@ -53,7 +55,7 @@ Slint UI
 5. **已完成配置：三平台 CI 与发布打包**
    - Windows、macOS 15 和 Ubuntu 24.04 分别执行 `cargo check --locked --package shiping` 与 `cargo test --locked --package shiping`。
    - 独立任务执行 `cargo fmt --all -- --check`。
-   - 版本标签发布时，Windows 继续同时打包 ShiTu 与 ShiPing；Linux x64、macOS ARM64 和 macOS x64 只打包 ShiPing。
+   - 版本标签发布时，仅打包 ShiPing：Windows x64、Linux x64、macOS ARM64 和 macOS x64。
    - Linux 产物为带桌面入口和图标的 `.tar.gz`；macOS 产物为带 `Info.plist`、权限用途说明和图标的 `.app.zip`。
 
 ## 已确认限制

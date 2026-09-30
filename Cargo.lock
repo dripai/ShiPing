@@ -4325,32 +4325,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "shitu"
-version = "0.1.34"
-dependencies = [
- "anyhow",
- "chrono",
- "global-hotkey",
- "image",
- "raw-window-handle",
- "rfd",
- "serde",
- "serde_json",
- "shi-foundation",
- "shi-ui",
- "slint",
- "slint-build",
- "windows",
- "windows-core",
- "windows-future",
- "winresource",
-]
-
-[[package]]
-name = "shiyin"
-version = "0.1.34"
-
-[[package]]
 name = "shlex"
 version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"

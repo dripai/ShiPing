@@ -1,4 +1,4 @@
-name: Publish cross-platform validated release
+name: Publish ShiPing release
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
       - name: Verify tag matches package versions
         shell: pwsh
         run: |
-          $packageNames = @('shitu', 'shiping')
+          $packageNames = @('shiping')
           $packages = @(
             (cargo metadata --locked --format-version 1 | ConvertFrom-Json).packages |
               Where-Object { $_.name -in $packageNames }
@@ -51,7 +51,7 @@ jobs:
             os: windows-latest
             kind: windows
             architecture: x86_64
-            artifact_name: windows-x86_64
+            artifact_name: shiping-windows-x86_64
           - name: Linux x64
             os: ubuntu-24.04
             kind: linux
@@ -97,20 +97,11 @@ jobs:
             libxrandr-dev \
             pkg-config
 
-      - name: Test ShiPing
-        if: matrix.kind != 'windows'
-        run: cargo test --locked --package shiping
-
-      - name: Test Windows workspace
-        if: matrix.kind == 'windows'
+      - name: Test ShiPing workspace
         run: cargo test --workspace --locked
 
       - name: Build ShiPing release binary
         run: cargo build --release --locked --package shiping --bin ShiPing
-
-      - name: Build ShiTu release binary
-        if: matrix.kind == 'windows'
-        run: cargo build --release --locked --package shitu --bin ShiTu
 
       - name: Build Microsoft Store upload assets
         if: matrix.kind == 'windows'
@@ -118,11 +109,6 @@ jobs:
         run: |
           $packages = (cargo metadata --locked --no-deps --format-version 1 | ConvertFrom-Json).packages
           $storeProducts = @(
-            @{
-              Product = 'ShiTu'
-              PackageName = 'shitu'
-              Executable = '.\target\release\ShiTu.exe'
-            },
             @{
               Product = 'ShiPing'
               PackageName = 'shiping'
@@ -152,10 +138,6 @@ jobs:
           New-Item -ItemType Directory -Force -Path release-assets | Out-Null
 
           $products = @(
-            @{
-              Name = 'ShiTu'
-              Executable = 'target\release\ShiTu.exe'
-            },
             @{
               Name = 'ShiPing'
               Executable = 'target\release\ShiPing.exe'

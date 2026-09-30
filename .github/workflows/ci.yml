@@ -1,4 +1,4 @@
-name: Cross-platform CI
+name: ShiPing CI
 
 on:
   push:
