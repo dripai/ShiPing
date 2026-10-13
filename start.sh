@@ -3,15 +3,15 @@
 set -euo pipefail
 
 usage() {
-    echo "Usage: ./start.sh <dev|build> [shiping]" >&2
+    echo "Usage: ./start.sh [dev|build] [shiping] (default: dev)" >&2
 }
 
-if (( $# < 1 || $# > 2 )); then
+if (( $# > 2 )); then
     usage
     exit 2
 fi
 
-action="$1"
+action="${1:-dev}"
 app="${2:-shiping}"
 
 case "$app" in
