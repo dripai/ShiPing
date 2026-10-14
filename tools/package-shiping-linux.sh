@@ -28,13 +28,13 @@ mkdir -p \
 
 install -m 0755 "$binary_path" "$bundle_dir/ShiPing"
 install -m 0644 \
-    "$repo_root/apps/shiping/packaging/linux/README.txt" \
+    "$repo_root/packaging/linux/README.txt" \
     "$bundle_dir/README.txt"
 install -m 0644 \
-    "$repo_root/apps/shiping/packaging/linux/com.dripai.shiping.desktop" \
+    "$repo_root/packaging/linux/com.dripai.shiping.desktop" \
     "$bundle_dir/share/applications/com.dripai.shiping.desktop"
 install -m 0644 \
-    "$repo_root/apps/shiping/assets/app.png" \
+    "$repo_root/assets/app.png" \
     "$bundle_dir/share/icons/hicolor/256x256/apps/com.dripai.shiping.png"
 
 archive_name="ShiPing-${release_label}-linux-${architecture}.tar.gz"

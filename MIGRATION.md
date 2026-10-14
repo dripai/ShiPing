@@ -1,5 +1,25 @@
 # ShiPing 独立项目迁移
 
+## GPUI 迁移（2026-10-14）
+
+- 当前项目为单个 Cargo package，源码集中在 `src/`；UI 使用 GPUI Kit 0.7.3，Slint 依赖、构建步骤和视图已移除。
+- 本次适配目标为 Windows 和 macOS；Linux 源码、依赖和打包材料保留，已从当前 CI/发布构建矩阵排除。
+- 新增跟随系统、浅色、深色主题；设置页分为常规、录制和快捷键。主界面布局暂时保留，后续重新设计。
+- 当前验证及平台适配说明见 [GPUI 迁移说明](docs/GPUI-MIGRATION.md)。以下记录属于此前的目录整理和独立仓库拆分。
+
+## 目录整理历史（2026-10-13，GPUI 迁移前）
+
+- 根目录 `Cargo.toml` 管理单个 `shiping` package，保留版本 `0.1.34` 和 `ShiPing` 可执行文件名。
+- Rust 源码集中到 `src/`，当时的 Slint 视图与复用组件位于 `src/ui/views` 和 `src/ui/components`。
+- 国际化并入 `src/i18n.rs`，配置目录函数并入 `src/config.rs`；删除未使用的共享日志和图片目录辅助代码。
+- 当时的图标与翻译位于 `assets/` 和 `translations/`；打包材料统一到 `packaging/windows`、`packaging/macos`、`packaging/linux`。
+- 原 `apps/`、`crates/` 目录已移除，配置路径、录制逻辑及平台包身份保持不变。
+- 本次整理已通过 Windows release 编译、29 项测试（另 1 项真实录屏测试按原配置跳过）、Clippy、Rustfmt、脚本语法、工作流 YAML、UTF-8 和完整 diff 检查；`./start.sh build` 与本地 MSIX/MSIXUPLOAD 打包通过，包内程序、图标和应用身份已核对。
+- 601 个外部依赖的版本、解析后的功能开关和锁文件校验和保持不变。未重新执行实机录屏、完整 UI 交互、macOS/Linux 构建或安装测试，也未运行远程 CI。
+- 以下内容为 2026-10-01 的历史记录，其中的目录名和验证结果不代表本次整理后的验证状态。
+
+## 独立仓库迁移历史（2026-10-01）
+
 迁移日期：2026-10-01。版本保持 `0.1.34`，Slint 保持 `1.17.0`。
 
 - 来源：`D:/workspace/12.aiwork/ShiTu`，提交 `4160e0ea1e56161316df102d748a82be81b4ba65`。

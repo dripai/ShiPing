@@ -19,8 +19,8 @@ $ErrorActionPreference = 'Stop'
 $products = @{
     ShiPing = @{
         ExecutableName = 'ShiPing.exe'
-        ManifestTemplate = Join-Path $PSScriptRoot '..\packaging\shiping\AppxManifest.xml'
-        IconSource = Join-Path $PSScriptRoot '..\apps\shiping\assets\app.png'
+        ManifestTemplate = Join-Path $PSScriptRoot '..\packaging\windows\AppxManifest.xml'
+        IconSource = Join-Path $PSScriptRoot '..\assets\app.png'
     }
 }
 

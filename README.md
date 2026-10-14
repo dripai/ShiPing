@@ -4,12 +4,6 @@
 
 An offline-first desktop screen recorder. Choose a display, visible window, or region and save a local MP4 or GIF. No account is required.
 
-![ShiPing recording toolbar](images/shiping_01.jpg)
-
-ShiPing is designed for product walkthroughs, tutorials, meeting demonstrations, and reproducible bug reports. Its compact toolbar keeps the active recording state and the controls you need in one place.
-
-![ShiPing preferences](images/shiping_02.jpg)
-
 - Record one screen, a visible window, or a fixed desktop region.
 - Save as MP4 with optional system audio and microphone input, or as a silent animated GIF.
 - Pause and resume without advancing the recording timeline.
@@ -17,9 +11,10 @@ ShiPing is designed for product walkthroughs, tutorials, meeting demonstrations,
 - Use 30/60 FPS for MP4 and 10/20 FPS for GIF.
 - Include the pointer and optionally highlight mouse clicks.
 - Configure the countdown, save folder, tray behavior, and global shortcuts.
+- Choose System, Light, or Dark appearance. Preferences are grouped into General, Recording, and Shortcuts.
 - Keep a visible recording boundary around the selected window or region until recording stops.
 
-> **Current status:** Windows recording passed a short MP4 check during this migration. macOS and Linux backends are implemented and have CI configuration; builds and real-device recording have not been revalidated in this independent repository.
+> **Current status:** The UI now uses GPUI, targeting Windows and macOS. Windows compilation, unit tests, and Clippy pass. Full macOS builds and recording interactions on both platforms remain unverified. See the [GPUI migration notes](docs/GPUI-MIGRATION.md) for exact versions and validation limits.
 
 ## Download and support
 
@@ -30,28 +25,31 @@ ShiPing is designed for product walkthroughs, tutorials, meeting demonstrations,
 
 ## Build locally
 
-The workspace defaults to `apps/shiping`; Rust 1.96.0 and Slint 1.17.0 are used by the current build configuration. Install the platform dependencies described in [the architecture notes](apps/shiping/ARCHITECTURE.md).
+This repository contains a single Cargo package, with source code in `src/`. The current build configuration uses Rust 1.96.0 and GPUI Kit 0.7.3 (GPUI 0.3.9). Install the platform dependencies described in [the architecture notes](docs/ARCHITECTURE.md).
 
 ```bash
-./start.sh dev
+./start.sh       # Defaults to dev
 ./start.sh build
 ```
 
 The script requires Bash (Git Bash on Windows). Standard Cargo commands also work:
 
 ```bash
-cargo check --locked --package shiping
-cargo test --locked --workspace
-cargo build --release --locked --package shiping --bin ShiPing
+cargo check --locked
+cargo test --locked
+cargo build --release --locked --bin ShiPing
 ```
 
-Version tags publish only ShiPing: Windows x64, Linux x64, macOS ARM64, and macOS x64. macOS archives use an ad-hoc signature and have no Apple notarization; Linux archives require the runtime dependencies listed in the architecture notes.
+The version-tag release matrix includes Windows x64, macOS ARM64, and macOS x64. macOS requires Xcode/Swift and an Apple SDK, with a macOS 15.0 deployment target. Archives use an ad-hoc signature without Apple notarization. Linux sources and packaging are retained but are outside this migration's build and validation scope.
 
 ## Project layout
 
-- `apps/shiping`: UI, recording core, platform backends, translations, and icons.
-- `crates/shi-foundation`, `crates/shi-ui`: internal modules maintained in this repository.
-- `packaging/shiping`: existing Microsoft Store identity and manifest.
+- `src`: application entry point, configuration, internationalization, and recording models.
+- `src/application`, `src/platform`: recording workflows and platform backends.
+- `src/ui`: GPUI views, recording state control, target selection, preferences, and tray integration.
+- `assets`: application icons. English/Chinese UI text is selected by `src/i18n.rs`.
+- `packaging/windows`, `packaging/macos`, `packaging/linux`: platform packaging materials.
 - `tools`: platform packaging scripts.
+- `docs/ARCHITECTURE.md`: architecture and platform limitations.
 
-The version continues from `0.1.34`. Configuration paths and package identity are preserved. See [the migration record](MIGRATION.md).
+The current version is `0.2.0`, continuing from `0.1.34`. Configuration paths and package identity are preserved. See [the migration record](MIGRATION.md).

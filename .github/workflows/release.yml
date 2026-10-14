@@ -30,7 +30,7 @@ jobs:
           if ($packages.Count -ne $packageNames.Count) {
             $foundNames = @($packages | ForEach-Object name)
             $missingNames = @($packageNames | Where-Object { $_ -notin $foundNames })
-            throw "Cargo workspace packages were not found: $($missingNames -join ', ')"
+            throw "Cargo packages were not found: $($missingNames -join ', ')"
           }
 
           foreach ($package in $packages) {
@@ -52,11 +52,7 @@ jobs:
             kind: windows
             architecture: x86_64
             artifact_name: shiping-windows-x86_64
-          - name: Linux x64
-            os: ubuntu-24.04
-            kind: linux
-            architecture: x86_64
-            artifact_name: shiping-linux-x86_64
+          # Linux packaging is retained but excluded from this GPUI release.
           - name: ShiPing macOS ARM64
             os: macos-15
             kind: macos
@@ -87,6 +83,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install --yes \
             libdbus-1-dev \
+            libgtk-3-dev \
+            libayatana-appindicator3-dev \
+            libasound2-dev \
+            libssl-dev \
+            libx11-xcb-dev \
+            libxcb-shape0-dev \
+            libxcb-xfixes0-dev \
+            libvulkan-dev \
+            libclang-dev \
             libfontconfig1-dev \
             libpipewire-0.3-dev \
             libwayland-dev \
@@ -97,11 +102,11 @@ jobs:
             libxrandr-dev \
             pkg-config
 
-      - name: Test ShiPing workspace
-        run: cargo test --workspace --locked
+      - name: Test ShiPing
+        run: cargo test --locked
 
       - name: Build ShiPing release binary
-        run: cargo build --release --locked --package shiping --bin ShiPing
+        run: cargo build --release --locked --bin ShiPing
 
       - name: Build Microsoft Store upload assets
         if: matrix.kind == 'windows'
@@ -121,7 +126,7 @@ jobs:
               Where-Object name -eq $storeProduct.PackageName |
               Select-Object -First 1
             if ($null -eq $package) {
-              throw "Cargo workspace package $($storeProduct.PackageName) was not found."
+              throw "Cargo package $($storeProduct.PackageName) was not found."
             }
             .\tools\package-store-msix.ps1 `
               -Product $storeProduct.Product `

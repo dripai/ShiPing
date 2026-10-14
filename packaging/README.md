@@ -1,15 +1,15 @@
 # ShiPing Microsoft Store MSIX package
 
-`tools/package-store-msix.ps1` packages only ShiPing. It uses `packaging/shiping/AppxManifest.xml`, preserves the existing Store identity, replaces `__PACKAGE_VERSION__` with `X.Y.Z.0`, and rejects a mismatched executable name.
+`tools/package-store-msix.ps1` packages only ShiPing. It uses `packaging/windows/AppxManifest.xml`, preserves the existing Store identity, replaces `__PACKAGE_VERSION__` with `X.Y.Z.0`, and rejects a mismatched executable name.
 
 ```powershell
-.\tools\package-store-msix.ps1 -Product ShiPing -ExecutablePath .\target\release\ShiPing.exe -Version 0.1.34 -OutputDirectory .\release-assets
+.\tools\package-store-msix.ps1 -Product ShiPing -ExecutablePath .\target\release\ShiPing.exe -Version 0.2.0 -OutputDirectory .\release-assets
 ```
 
 Windows SDK `MakeAppx.exe` is required. Output:
 
-- `ShiPing-0.1.34-windows-x64.msix`: unsigned MSIX.
-- `ShiPing-0.1.34-store.msixupload`: Partner Center upload archive.
+- `ShiPing-0.2.0-windows-x64.msix`: unsigned MSIX.
+- `ShiPing-0.2.0-store.msixupload`: Partner Center upload archive.
 
 ShiPing declares `runFullTrust` and has no Windows AI OCR or Windows App Runtime dependency.
 
@@ -19,3 +19,5 @@ Official references:
 
 - https://learn.microsoft.com/windows/apps/package-and-deploy/choose-distribution-path
 - https://learn.microsoft.com/windows/apps/publish/publish-your-app/msix/upload-app-packages
+
+macOS bundle metadata lives in `packaging/macos` and is used by `tools/package-shiping-macos.sh`. Linux desktop entries and runtime instructions live in `packaging/linux` and are used by `tools/package-shiping-linux.sh`.

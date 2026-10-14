@@ -28,7 +28,7 @@ mkdir -p "$contents_dir/MacOS" "$resources_dir" "$output_dir"
 
 install -m 0755 "$binary_path" "$contents_dir/MacOS/ShiPing"
 install -m 0644 \
-    "$repo_root/apps/shiping/packaging/macos/Info.plist" \
+    "$repo_root/packaging/macos/Info.plist" \
     "$contents_dir/Info.plist"
 
 /usr/libexec/PlistBuddy \
@@ -41,7 +41,7 @@ mkdir -p "$iconset_dir"
 
 while read -r size filename; do
     sips -z "$size" "$size" \
-        "$repo_root/apps/shiping/assets/app.png" \
+        "$repo_root/assets/app.png" \
         --out "$iconset_dir/$filename" >/dev/null
 done <<'SIZES'
 16 icon_16x16.png

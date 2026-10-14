@@ -4,6 +4,8 @@
 
 # Local product and commercial documentation
 /docs/*
+!/docs/ARCHITECTURE.md
+!/docs/GPUI-MIGRATION.md
 !/docs/architecture/
 /docs/architecture/*
 !/docs/architecture/shiping-target-architecture.mmd
